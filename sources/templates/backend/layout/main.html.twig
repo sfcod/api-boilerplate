@@ -1,0 +1,27 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% use 'backend/layout/partials/logo.html.twig' %}
+{#{% use 'layout/partials/page_content_header.html.twig' %}#}
+
+{#{% block sonata_page_content_header %}#}
+    {#{{ include('layout/partials/scope_notifications.html.twig') }}#}
+    {#{% if is_granted('ROLE_PREVIOUS_ADMIN') %}#}
+        {#<form class="admin-search-form"#}
+              {#action="{{ url('portal_search_portfolio_list', {'type':constant('Portal\\Shared\\Enumerable\\SearchType::PORTFOLIOS')}) }}">#}
+            {#<input type="text" class="form-control" id="admin-search" name="admin-search"#}
+                   {#placeholder="Search" value="{{ app.request.query.get('admin-search') }}">#}
+        {#</form>#}
+    {#{% endif %}#}
+    {#{{ parent() }}#}
+{#{% endblock sonata_page_content_header %}#}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('backend/app') }}
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('backend/app') }}
+{% endblock javascripts %}

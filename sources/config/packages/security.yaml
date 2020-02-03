@@ -1,0 +1,101 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
+            json_login:
+                check_path: api_login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern: ^/api
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        admin:
+            pattern: ^/admin
+            anonymous: true
+#            form_login:
+#                login_path: admin_login
+#                check_path: admin_login
+#                default_target_path: sonata_admin_dashboard
+#                username_parameter: "email"
+#                password_parameter: "password"
+#                post_only: true
+            guard:
+                authenticators:
+                    - App\Security\AdminLoginFormAuthenticator
+#                remember_me: true
+#            remember_me:
+#                secret: '%kernel.secret%'
+#                lifetime: 604800
+#                path: /
+            logout:
+                path: admin_logout
+                target: admin_login
+
+        main:
+            pattern: ^/
+            provider: app_user_provider
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+#        main:
+#            anonymous: lazy
+#            guard:
+#                authenticators:
+#                    - App\Security\LoginFormAuthenticator
+#            logout:
+#                path: app_logout
+                  # where to redirect after logout
+                  # target: app_any_route
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/forgot-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: true
+
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_USER
+            - ROLE_ADMIN_USERS_LIST
+            - ROLE_ADMIN_USERS_VIEW
+            - ROLE_ADMIN_USERS_EDIT
+            - ROLE_ADMIN_USERS_CREATE
+            - ROLE_ADMIN_USERS_DELETE
+            - ROLE_ADMIN_USERS_EXPORT

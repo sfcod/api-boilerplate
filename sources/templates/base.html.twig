@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+        {{ encore_entry_link_tags('frontend/app') }}
+
+        <!-- Renders a link tag (if your module requires any CSS)
+             <link rel="stylesheet" href="/build/app.css"> -->
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+{% block javascripts %}
+    {{ encore_entry_script_tags('frontend/app') }}
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script> -->
+{% endblock %}
+</body>
+</html>

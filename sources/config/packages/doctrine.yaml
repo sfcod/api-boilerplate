@@ -1,0 +1,19 @@
+doctrine:
+    dbal:
+        driver: 'pdo_pgsql'
+        server_version: '11'
+        url: '%env(resolve:DATABASE_URL)%'
+        schema_filter: ~^(?!v_)~
+        types:
+            user_role: App\DBAL\Types\UserRoleType
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

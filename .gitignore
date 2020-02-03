@@ -1,0 +1,8 @@
+###> other ###
+.idea
+/.env
+###< other ###
+
+###> docker ###
+docker-compose.override.yml
+###< docker ###

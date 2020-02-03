@@ -1,0 +1,28 @@
+sonata_admin:
+    title: API admin
+    title_logo: /bundles/sonataadmin/logo_title.png
+    security:
+        handler: Sonata\AdminBundle\Security\Handler\RoleSecurityHandler
+        role_admin: ROLE_USER
+        role_super_admin: ROLE_SUPER_ADMIN
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            admin.users:
+                on_top: true
+                label: Users
+                label_catalogue: ~
+                icon: '<i class="fa fa-users"></i>'
+                roles: [ROLE_ADMIN]
+                items:
+                    - admin.users
+    templates:
+        layout: 'backend/layout/main.html.twig'
+        user_block: 'backend/layout/partials/user_block.html.twig'
+    options:
+        title_mode: 'both'
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center" id="main" style="height: 100vh;">
+        <h1 class="mr-3 align-top inline-block align-content-center">Oops!</h1>
+        <div class="inline-block align-middle border-left pl-3">
+            <h2 class="font-weight-normal lead mb-0" id="desc">
+                The server returned a "{{ status_code }} {{ status_text }}".
+                Something is broken. Please let us know what you were doing
+                when this error occurred.
+                We will fix it as soon as possible. Sorry for any inconvenience caused.
+                <p class="mb-0"><a href="/" class="btn btn-link mb-0 pb-0">Back to Home</a></p>
+            </h2>
+        </div>
+    </div>
+{% endblock %}

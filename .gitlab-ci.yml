@@ -1,0 +1,91 @@
+image: edbizarro/gitlab-ci-pipeline-php:7.2
+
+services:
+  - mysql:5.6
+
+variables:
+  MYSQL_DATABASE: vodafone_test
+  MYSQL_USER: vodafone
+  MYSQL_PASSWORD: vodafone123
+  MYSQL_ROOT_PASSWORD: secret
+
+stages:
+  - test
+#  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - sources/vendor/
+
+before_script:
+  - php sources/init.php --env=Test --overwrite=y
+  - composer install --prefer-dist --no-ansi --no-interaction --no-progress --working-dir=sources
+
+test:
+  stage: test
+  only:
+    refs:
+      - develop
+      - master
+      - staging
+      - live
+  script:
+    - echo "Test - start"
+    - php sources/bin/console doctrine:migrations:migrate --env="test"
+    - php sources/bin/console doctrine:fixtures:load -n
+    - php sources/vendor/bin/php-cs-fixer fix --dry-run --diff --config='sources/.php_cs'
+#    - php sources/vendor/bin/phpstan analyse --no-progress -l 6 -c sources/phpstan.neon sources/src
+    - php sources/bin/phpunit --configuration sources/phpunit.xml.dist
+    - echo "Test - finish"
+
+#deploy:staging:
+#  stage: deploy
+#  environment:
+#    name: staging
+#  cache:
+#    paths: []
+#  only:
+#    refs:
+#      - staging
+#  script:
+#    - echo "Deployment to staging - start"
+#    - sudo mkdir /root/.ssh
+#    - ssh-keyscan node4.devplatform2.com | sudo tee -a /root/.ssh/known_hosts
+#    - echo "$DEVPLATFORM2_PRIVATE_KEY" | tr -d '\r' | sudo tee /root/.ssh/dpl2.pri
+#    - sudo chmod 400 /root/.ssh/known_hosts /root/.ssh/dpl2.pri
+#    - echo "Configuration"
+#    - sudo ssh digitalsilkstage@node4.devplatform2.com -i /root/.ssh/dpl2.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/httpdocs/api/api; yes | cp -rf environments/staging/jwt config; yes | cp -rf environments/staging/.env.local .env.local && rm -rf var/cache'
+#    - echo "Deployment to staging - git pull"
+#    - sudo ssh digitalsilkstage@node4.devplatform2.com -i /root/.ssh/dpl2.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/httpdocs/api/api; git checkout staging && git pull gitlab staging && composer install --no-interaction'
+#    - echo "Deployment to staging - doctrine:migrations:migrate"
+#    - sudo ssh digitalsilkstage@node4.devplatform2.com -i /root/.ssh/dpl2.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/httpdocs/api/api; php bin/console doctrine:migrations:migrate --no-interaction'
+#    - echo "Test 200 status code"
+#    - curl --silent --fail --location http://api.digitalsilkstage.node4.devplatform2.com/api/doc > /dev/null
+#    - echo "Deployment to staging - finish"
+
+#deploy:live:
+#  stage: deploy
+#  environment:
+#    name: live
+#  cache:
+#    paths: []
+#  only:
+#    refs:
+#      - live
+#  script:
+#    - echo "Deployment to staging - start"
+#    - sudo mkdir /root/.ssh
+#    - ssh-keyscan 159.89.228.8 | sudo tee -a /root/.ssh/known_hosts
+#    - echo "$LIVE_PRIVATE_KEY" | tr -d '\r' | sudo tee /root/.ssh/live.pri
+#    - sudo chmod 400 /root/.ssh/known_hosts /root/.ssh/live.pri
+#    - echo "Configuration"
+#    - sudo ssh digitalsilk@159.89.228.8 -i /root/.ssh/live.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/intranet-dslk/digitalsilkapi/api; yes | cp -rf environments/prod/jwt config  && yes | cp -rf environments/prod/.env.local .env.local && rm -rf var/cache'
+#    - echo "Deployment to live - git pull"
+#    - sudo ssh digitalsilk@159.89.228.8 -i /root/.ssh/live.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/intranet-dslk/digitalsilkapi/api; git checkout live && git pull && composer install --no-interaction'
+#    - echo "Deployment to live - doctrine:migrations:migrate"
+#    - sudo ssh digitalsilk@159.89.228.8 -i /root/.ssh/live.pri 'export PATH=$PATH:/usr/local/bin; cd /var/www/intranet-dslk/digitalsilkapi/api; php bin/console doctrine:migrations:migrate --no-interaction'
+#    - echo "Test 200 status code"
+#    - curl --silent --fail --location http://intranet.digitalsilk.com/backend/api/doc > /dev/null
+#    - echo "Deployment to live - finish"
+

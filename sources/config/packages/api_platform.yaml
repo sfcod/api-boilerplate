@@ -1,0 +1,24 @@
+api_platform:
+    version: '1.0.0'
+    allow_plain_identifiers: true
+
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/DTO']
+
+    collection:
+        pagination:
+            client_items_per_page: true
+
+    formats:
+        json:
+            mime_types: ['application/json']
+
+#    patch_formats:
+#        json: ['application/merge-patch+json']
+
+    swagger:
+        versions: [3]
+        api_keys:
+            Bearer MY_NEW_TOKEN:
+                name: Authorization
+                type: header
