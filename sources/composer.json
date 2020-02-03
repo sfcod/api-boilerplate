@@ -6,7 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.2",
-        "doctrine/doctrine-bundle": "^1.0",
+        "doctrine/doctrine-bundle": "^2.0",
         "fresh/doctrine-enum-bundle": "~6.0",
         "friendsofphp/php-cs-fixer": "^2.16",
         "fzaninotto/faker": "^1.9",

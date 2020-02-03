@@ -70,9 +70,6 @@
             "src/Repository/.gitignore"
         ]
     },
-    "doctrine/doctrine-cache-bundle": {
-        "version": "1.4.0"
-    },
     "doctrine/doctrine-fixtures-bundle": {
         "version": "3.0",
         "recipe": {
@@ -404,7 +401,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "1.0",
-            "ref": "19fa03bacd9a6619583d1e4939da4388df22984d"
+            "ref": "c0eeb50665f0f77226616b6038a9b06c03752d8e"
         },
         "files": [
             ".env"
@@ -419,7 +416,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.4",
-            "ref": "9b91ef29da037baeec4c3715cf55bea2a165c902"
+            "ref": "23ecaccc551fe2f74baf613811ae529eb07762fa"
         },
         "files": [
             "config/bootstrap.php",
@@ -427,7 +424,6 @@
             "config/packages/framework.yaml",
             "config/packages/test/framework.yaml",
             "config/routes/dev/framework.yaml",
-            "config/secrets/prod/.gitignore",
             "config/services.yaml",
             "public/index.php",
             "src/Controller/.gitignore",
@@ -494,7 +490,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "6240c6d43e8237a32452f057f81816820fd56ab6"
+            "ref": "5f5bdd0f0bd94eedc40ebf637d3c9fe9e48c9689"
         },
         "files": [
             "config/packages/dev/monolog.yaml",
@@ -514,14 +510,14 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.3",
-            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
+            "ref": "3f8a8c93cd47061999316f8d56edd6c2abca9308"
         },
         "files": [
             ".env.test",
             "bin/phpunit",
-            "config/bootstrap.php",
+            "config/services_test.yaml",
             "phpunit.xml.dist",
-            "tests/.gitignore"
+            "tests/bootstrap.php"
         ]
     },
     "symfony/polyfill-intl-icu": {
