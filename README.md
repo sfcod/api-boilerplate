@@ -6,6 +6,14 @@
 ## Fronted part
 - Api platform 
 
+#### Run:
+``` bash
+$ composer install
+$ npm install
+$ npm run dev
+$ php init.php
+```
+
 #### Generate the SSH keys:
 
 ``` bash
