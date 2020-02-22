@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "route_name"="update_profile",
  *             "normalization_context"={"groups"={"user:profile:read"}},
  *             "denormalization_context"={"groups"={"user:profile:write"}},
- *             "swagger_context"={
+ *             "openapi_context"={
  *                 "summary"="Update the current User resource.",
  *                 "parameters"={},
  *             },
@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             "method"="GET",
  *             "route_name"="get_profile",
  *             "normalization_context"={"groups"={"user:profile:read"}},
- *             "swagger_context"={
+ *             "openapi_context"={
  *                 "summary"="Retreive the current User resource.",
  *                 "parameters"={},
  *             },

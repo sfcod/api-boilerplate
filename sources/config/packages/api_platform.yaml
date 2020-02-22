@@ -13,6 +13,9 @@ api_platform:
         json:
             mime_types: ['application/json']
 
+        multipart:
+            mime_types: ['multipart/form-data']
+
 #    patch_formats:
 #        json: ['application/merge-patch+json']
 
