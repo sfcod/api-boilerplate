@@ -1,0 +1,22 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+
+    App\Command\LoadDataFixturesDoctrineCommand:
+        arguments:
+            - '@doctrine.fixtures.loader'
+            - '@Doctrine\Common\Persistence\ManagerRegistry'
+        calls:
+            - method: setExcludedTables
+              arguments:
+                  $excluded:
+                      0: 't_country'
+                      1: 't_city'
+                      2: 't_quiz_question'
+                      3: 't_state'
+                      4: 't_ethnicity'
+                      5: 't_language'
+        tags: ['console.command']

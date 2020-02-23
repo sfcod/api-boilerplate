@@ -44,6 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         },
  *     }
  * )
+ * @ORM\EntityListeners({"App\EntityListener\HashPasswordListener"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="t_user")
  */

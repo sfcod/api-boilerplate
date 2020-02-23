@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Common\TransformJsonBody;
+use App\Controller\Common\TransformJsonBodyTrait;
 use App\Entity\User;
 use App\FormType\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-    use TransformJsonBody;
+    use TransformJsonBodyTrait;
 
     /**
      * @Route(

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Common\TransformJsonBody;
+use App\Controller\Common\TransformJsonBodyTrait;
 use App\Entity\User;
 use App\Event\UserRecoveryPasswordEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
     {
     }
 
-    use TransformJsonBody;
+    use TransformJsonBodyTrait;
 
     /**
      * @Route(

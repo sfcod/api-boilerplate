@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package App\Controller\Common
  */
-trait TransformJsonBody
+trait TransformJsonBodyTrait
 {
     /**
      * @return bool
