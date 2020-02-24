@@ -26,5 +26,5 @@ $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
 ``` bash
 $ php bin/phpunit
-$ php bin/phpunit phpunit --filter SecurityControllerTest
+$ php bin/phpunit --filter SecurityControllerTest
 ```
