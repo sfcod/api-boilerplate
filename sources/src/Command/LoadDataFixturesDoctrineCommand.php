@@ -35,7 +35,6 @@ class LoadDataFixturesDoctrineCommand extends LoadDataFixturesDoctrineCommandAli
      */
     public function setExcludedTables(array $excluded)
     {
-        dd($excluded);
         $this->excluded = $excluded;
     }
 
