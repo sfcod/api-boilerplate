@@ -12,11 +12,11 @@ services:
         calls:
             - method: setExcludedTables
               arguments:
-                  $excluded:
-                      0: 't_country'
-                      1: 't_city'
-                      2: 't_quiz_question'
-                      3: 't_state'
-                      4: 't_ethnicity'
-                      5: 't_language'
+                  $excluded: []
+#                      0: 't_country'
+#                      1: 't_city'
+#                      2: 't_quiz_question'
+#                      3: 't_state'
+#                      4: 't_ethnicity'
+#                      5: 't_language'
         tags: ['console.command']
