@@ -15,6 +15,10 @@ framework:
     cache:
         pools:
             doctrine.result_cache_pool:
-                adapter: cache.app
+                adapter: cache.adapter.redis #cache.app
+                provider: "%env(REDIS_URL)%/10"
+                default_lifetime: 3600
             doctrine.system_cache_pool:
-                adapter: cache.system
+                adapter: cache.adapter.redis #cache.system
+                provider: "%env(REDIS_URL)%/11"
+                default_lifetime: 3600

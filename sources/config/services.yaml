@@ -18,7 +18,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Documentation,EntityListener,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Command,Entity,Migrations,Tests,Documentation,EntityListener,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -29,21 +29,19 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Cache\PredisSession:
+        class: \Predis\Client
+        arguments:
+            $parameters: '%env(REDIS_URL)%/5'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@App\Cache\PredisSession'
+
     App\Command\:
         resource: '../src/Command/*'
         exclude:
             - '../src/Command/LoadDataFixturesDoctrineCommand.php'
-        tags: ['console.command']
-
-    App\Command\LoadDataFixturesDoctrineCommand:
-        arguments:
-            - '@doctrine.fixtures.loader'
-            - '@Doctrine\Common\Persistence\ManagerRegistry'
-        calls:
-            - method: setExcludedTables
-              arguments:
-                  $excluded: []
-
         tags: ['console.command']
 
     Database\DataFixtures\:

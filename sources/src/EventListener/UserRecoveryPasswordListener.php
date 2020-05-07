@@ -29,8 +29,6 @@ final class UserRecoveryPasswordListener
 
     /**
      * RecoveryPasswordListener constructor.
-     * @param MailerInterface $mailer
-     * @param Env $env
      */
     public function __construct(MailerInterface $mailer, Env $env)
     {
@@ -41,7 +39,6 @@ final class UserRecoveryPasswordListener
     /**
      * Send email to user with recovery token
      *
-     * @param UserRecoveryPasswordEvent $event
      * @throws TransportExceptionInterface
      */
     public function __invoke(UserRecoveryPasswordEvent $event)
