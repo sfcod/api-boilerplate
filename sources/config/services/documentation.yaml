@@ -1,0 +1,33 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\Documentation\Paths\:
+        public: true
+        resource: '../../src/Documentation/Paths'
+        tags:
+            - { name: documentation.paths }
+
+    App\Documentation\Definitions\:
+        public: true
+        resource: '../../src/Documentation/Definitions'
+        tags:
+            - { name: documentation.definitions }
+
+    App\Documentation\Schemas\:
+        public: true
+        resource: '../../src/Documentation/Schemas'
+        tags:
+            - { name: documentation.schemas }
+
+    App\Documentation\DocumentationNormalizer:
+        decorates: api_platform.swagger.normalizer.api_gateway
+        arguments: ['@App\Documentation\DocumentationNormalizer.inner']
+        calls:
+            - [setPaths, [!tagged documentation.paths]]
+            - [setSchemas, [!tagged documentation.schemas]]
+            - [setDefinitions, [!tagged documentation.definitions]]
+            - [setHiddenPaths, [[]]]
+#            - [setHiddenPaths, [['Some route', 'Another route']]]

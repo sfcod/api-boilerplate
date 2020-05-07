@@ -46,7 +46,6 @@ class TransformJsonBodySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ControllerEvent $event
      * @throws ReflectionException
      */
     public function onKernelController(ControllerEvent $event)

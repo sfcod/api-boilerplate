@@ -7,6 +7,7 @@
 - Api platform 
 
 #### Run:
+Configure mailer
 ``` bash
 $ composer install
 $ npm install

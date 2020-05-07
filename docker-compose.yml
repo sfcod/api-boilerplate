@@ -43,7 +43,7 @@ services:
         hostname: "redis"
         restart: unless-stopped
         ports:
-            - "${DOCKER_REDIS_PORT:-6379}:6379"
+            - "${REDIS_PORT:-6379}:6379"
         volumes:
             - redis-storage:/data
 volumes:

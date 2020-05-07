@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
-use App\Tests\AuthenticatedClient;
 use App\Tests\WebTestCaseAbstract;
 use Database\DataFixtures\UserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -16,14 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SecurityControllerTest extends WebTestCaseAbstract
 {
-    use AuthenticatedClient;
-
     /**
      * Test api login
      */
     public function testLogin()
     {
-        $client = static::createClient();
+        $client = $this->getKernelClient();
         $client->request(
             'POST',
             '/api/login-check',

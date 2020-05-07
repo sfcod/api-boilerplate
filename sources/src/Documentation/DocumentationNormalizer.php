@@ -6,6 +6,7 @@ use App\Documentation\Definitions\DefinitionObjectInterface;
 use App\Documentation\Paths\PathInterface;
 use App\Documentation\Paths\ReplacePathInterface;
 use App\Documentation\Paths\UnsupportedParamsInterface;
+use App\Documentation\Schemas\SchemasInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -31,9 +32,14 @@ final class DocumentationNormalizer implements NormalizerInterface
     private $hiddenPaths = [];
 
     /**
+     * @var SchemasInterface[]
+     */
+    private $schemas = [];
+
+    /**
      * @var DefinitionObjectInterface[]
      */
-    private $definitions;
+    private $definitions = [];
 
     public function __construct(NormalizerInterface $decorated)
     {
@@ -57,6 +63,14 @@ final class DocumentationNormalizer implements NormalizerInterface
     }
 
     /**
+     * @param SchemasInterface[] $schemas
+     */
+    public function setSchemas($schemas)
+    {
+        $this->schemas = $schemas;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function normalize($object, $format = null, array $context = [])
@@ -69,6 +83,7 @@ final class DocumentationNormalizer implements NormalizerInterface
 
             $documentation['paths'][$path->getPath()][$path->getMethod()] = $path->getParams();
         }
+
         foreach ($this->definitions as $definition) {
             $documentation['definitions'][$definition->getName()] = $definition->getParams();
         }
@@ -79,6 +94,15 @@ final class DocumentationNormalizer implements NormalizerInterface
         foreach ($this->hiddenPaths as $path) {
             if (isset($data['paths'][$path])) {
                 unset($data['paths'][$path]);
+            }
+        }
+        foreach ($this->schemas as $schema) {
+            foreach ($schema->getSchemas() as $schemaName) {
+                if (isset($data['components']['schemas'][$schemaName])) {
+                    foreach ($schema->getProperties() as $i => $property) {
+                        $data['components']['schemas'][$schemaName]['properties'][$i] = $property;
+                    }
+                }
             }
         }
 

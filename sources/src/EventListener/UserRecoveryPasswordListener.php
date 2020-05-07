@@ -3,7 +3,9 @@
 namespace App\EventListener;
 
 use App\Event\UserRecoveryPasswordEvent;
+use App\Service\Env;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
 /**
@@ -21,22 +23,31 @@ final class UserRecoveryPasswordListener
     private $mailer;
 
     /**
-     * RecoveryPasswordListener constructor.
+     * @var Env
      */
-    public function __construct(MailerInterface $mailer)
+    private $env;
+
+    /**
+     * RecoveryPasswordListener constructor.
+     * @param MailerInterface $mailer
+     * @param Env $env
+     */
+    public function __construct(MailerInterface $mailer, Env $env)
     {
         $this->mailer = $mailer;
+        $this->env = $env;
     }
 
     /**
      * Send email to user with recovery token
      *
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @param UserRecoveryPasswordEvent $event
+     * @throws TransportExceptionInterface
      */
     public function __invoke(UserRecoveryPasswordEvent $event)
     {
         $email = (new TemplatedEmail())
-            ->from(getenv('MAILER_FROM'))
+            ->from($this->env->get('MAILER_FROM'))
             ->to($event->getUser()->getEmail())
             ->subject('Password recovery')
             ->htmlTemplate('email/recovery_password.html.twig')

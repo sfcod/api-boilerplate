@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Actions;
 
 use App\Entity\User;
-use App\Tests\AuthenticatedClient;
 use App\Tests\WebTestCaseAbstract;
 use Database\DataFixtures\UserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -15,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  */
 class BandActionTest extends WebTestCaseAbstract
 {
-    use AuthenticatedClient;
-
     /**
      * Test api login
      */

@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
+imports:
+    - { resource: services/documentation.yaml }
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -52,30 +55,6 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener }
 
-    App\Documentation\Paths\:
-        public: true
-        resource: '../src/Documentation/Paths'
-        tags:
-            - { name: documentation.paths }
-
-    App\Documentation\Definitions\:
-        public: true
-        resource: '../src/Documentation/Definitions'
-        tags:
-            - { name: documentation.definitions }
-
-    App\Documentation\DocumentationNormalizer:
-        decorates: api_platform.swagger.normalizer.api_gateway
-        arguments: ['@App\Documentation\DocumentationNormalizer.inner']
-        calls:
-            - [setPaths, [!tagged documentation.paths]]
-            - [setDefinitions, [!tagged documentation.definitions]]
-##            - [setHiddenPaths, [['/api/menus/{id}']]]
-#            - method: setHiddenPaths
-#              arguments:
-#                  - {
-#                        0: '/api/menus/{id}'
-#                    }
     Sonata\AdminBundle\Security\Handler\RoleSecurityHandler:
         arguments:
             - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
