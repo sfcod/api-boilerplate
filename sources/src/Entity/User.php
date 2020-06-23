@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\DBAL\Types\UserRoleType;
+use App\Controller\Actions\User\UpdateProfile;
+use App\Controller\Actions\User\UserItem;
+use App\DBAL\Types\UserRole;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -18,29 +20,34 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "normalization_context"={"groups"={"user:read"}},
  *     },
  *     collectionOperations={
+ *     },
+ *     itemOperations={
+ *         "get_profile"={
+ *             "method"="GET",
+ *             "read"=false,
+ *             "path"="/users/profile",
+ *             "controller"=UserItem::class,
+ *             "normalization_context"={"groups"={"user:read"}},
+ *             "openapi_context"={
+ *                 "summary"="Retreive the current User resource.",
+ *                 "parameters"={},
+ *             },
+ *         },
  *         "update_profile"={
  *             "method"="PUT",
- *             "route_name"="update_profile",
- *             "normalization_context"={"groups"={"user:profile:read"}},
+ *             "read"=false,
+ *             "path"="/users/profile",
+ *             "controller"=UpdateProfile::class,
+ *             "normalization_context"={"groups"={"user:read"}},
  *             "denormalization_context"={"groups"={"user:profile:write"}},
  *             "openapi_context"={
  *                 "summary"="Update the current User resource.",
  *                 "parameters"={},
  *             },
  *         },
- *     },
- *     itemOperations={
  *         "get"={
+ *              "method"="GET",
  *              "access_control"="is_granted('ROLE_USER')",
- *         },
- *         "get_profile"={
- *             "method"="GET",
- *             "route_name"="get_profile",
- *             "normalization_context"={"groups"={"user:profile:read"}},
- *             "openapi_context"={
- *                 "summary"="Retreive the current User resource.",
- *                 "parameters"={},
- *             },
  *         },
  *     }
  * )
@@ -60,7 +67,7 @@ class User implements UserInterface
     protected $plainPassword;
 
     /**
-     * @Groups({"user:read", "report:read", "user:profile:read"})
+     * @Groups({"user:read", "user:profile:read"})
      *
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -69,14 +76,14 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Groups({"user:read", "report:read", "user:profile:read"})
+     * @Groups({"user:read", "user:profile:read"})
      *
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
     /**
-     * @Groups({"user:read", "report:read"})
+     * @Groups({"user:read", "user:profile:write"})
      *
      * @ORM\Column(name="first_name", type="string", length=180)
      */
@@ -84,7 +91,7 @@ class User implements UserInterface
 
 //    * @DoctrineAssert\Enum(entity="App\DBAL\Types\UserRoleType")
     /**
-     * @Groups({"user:read", "report:read"})
+     * @Groups({"user:read", "user:profile:write"})
      *
      * @ORM\Column(name="last_name", type="string", length=180)
      */
@@ -177,8 +184,8 @@ class User implements UserInterface
     {
         $roles = $this->roles;
 
-        if (!in_array(UserRoleType::ROLE_USER, $roles)) {
-            $roles[] = UserRoleType::ROLE_USER;
+        if (!in_array(UserRole::ROLE_USER, $roles)) {
+            $roles[] = UserRole::ROLE_USER;
         }
 
         return $this->roles;

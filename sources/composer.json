@@ -43,6 +43,7 @@
         "symfony/yaml": "*"
     },
     "require-dev": {
+        "dms/phpunit-arraysubset-asserts": "^0.1.0",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.14",

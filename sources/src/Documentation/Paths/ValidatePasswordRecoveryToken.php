@@ -20,7 +20,7 @@ class ValidatePasswordRecoveryToken implements PathInterface, ReplacePathInterfa
      */
     public function getPath(): string
     {
-        return '/api/forgot-password/validate-token/{token}';
+        return '/api/forgot-password/validate-token';
     }
 
     /**
@@ -28,7 +28,7 @@ class ValidatePasswordRecoveryToken implements PathInterface, ReplacePathInterfa
      */
     public function getMethod(): string
     {
-        return 'get';
+        return 'post';
     }
 
     /**
@@ -39,11 +39,23 @@ class ValidatePasswordRecoveryToken implements PathInterface, ReplacePathInterfa
         return new ArrayObject([
             'tags' => ['User'],
             'summary' => 'Validate password recovery token.',
-            'parameters' => [
-                [
-                    'name' => 'token',
-                    'in' => 'path',
-                    'description' => 'Recovery token from email',
+            'requestBody' => [
+                'content' => [
+                    'application/json' => [
+                        'name' => 'token',
+                        'in' => 'body',
+                        'schema' => [
+                            'type' => 'object',
+                            'description' => '',
+                            'properties' => [
+                                'token' => [
+                                    'type' => 'string',
+                                    'description' => 'token',
+                                    'required' => true,
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'responses' => [

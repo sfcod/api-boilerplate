@@ -75,10 +75,12 @@ class SecurityControllerTest extends WebTestCaseAbstract
 
         /** @var KernelBrowser $client */
         $client = static::createClient();
-        $client->request('GET', sprintf('/api/forgot-password/validate-token/%s', $user->getRecoveryPasswordToken()), [], [], [
+        $client->request('POST', sprintf('/api/forgot-password/validate-token'), [], [], [
             'HTTP_ACCEPT' => 'application/json',
             'CONTENT_TYPE' => 'application/json',
-        ]);
+        ], json_encode([
+            'token' => $user->getRecoveryPasswordToken(),
+        ]));
 
         $data = json_decode($client->getResponse()->getContent(), true);
 

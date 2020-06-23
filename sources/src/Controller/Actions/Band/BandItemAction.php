@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Actions;
+namespace App\Controller\Actions\Band;
 
-use App\DTO\Band;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @package App\Controller\Actions
  */
-class BandAction
+class BandItemAction extends AbstractController
 {
     /**
      * Invoke action

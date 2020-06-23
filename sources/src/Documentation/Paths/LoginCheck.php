@@ -23,12 +23,12 @@ class LoginCheck implements PathInterface
         return new ArrayObject([
             'tags' => ['User'],
             'summary' => 'Get JWT token to login by Email and Password (Authorize user).',
-            'parameters' => [
-                [
-                    'name' => 'credentials',
-                    'in' => 'body',
-                    'schema' => [
-                        '$ref' => (new UserCredentials())->getRef(),
+            'requestBody' => [
+                'content' => [
+                    'application/json' => [
+                        'schema' => [
+                            '$ref' => (new UserCredentials())->getRef(),
+                        ],
                     ],
                 ],
             ],

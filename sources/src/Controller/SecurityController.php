@@ -86,17 +86,19 @@ class SecurityController extends AbstractController
     /**
      * @Route(
      *     name="forgot_password_validate_token",
-     *     path="/api/forgot-password/validate-token/{token}",
-     *     methods={"GET"},
+     *     path="/api/forgot-password/validate-token",
+     *     methods={"POST"},
      * )
      *
      * @return JsonResponse
      */
-    public function validateRecoveryTokenAction(string $token, JWTTokenManagerInterface $tokenManager)
+    public function validateRecoveryTokenAction(Request $request, JWTTokenManagerInterface $tokenManager)
     {
+        $this->transformJsonBody($request);
+
         /** @var User|null $user */
         $user = $this->getDoctrine()->getRepository(User::class)
-            ->findOneBy(['recoveryPasswordToken' => $token]);
+            ->findOneBy(['recoveryPasswordToken' => $request->request->get('token')]);
 
         if (!$user) {
             return $this->json(['message' => 'Invalid code.'], 404);

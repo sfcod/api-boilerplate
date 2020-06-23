@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Exception;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -9,12 +10,56 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 /**
  * Class FormUtility
  *
- * @author Virchenko Maksim <muslim1992@gmail.com>
+ * @author Orlov Alexey <orlov.alexey@zfort.com>
  *
  * @package Portal\Shared\Service
  */
 class FormUtility
 {
+    /**
+     * @param FormInterface|ConstraintViolationListInterface $data
+     * @param string $title
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function formatErrors($data, $title = 'An error occurred')
+    {
+        $detail = '';
+        $violations = [];
+        switch (true) {
+            case $data instanceof FormInterface:
+                $errors = $this->getErrorsAsArray($data);
+                foreach ($errors as $key => $message) {
+                    $violations[] = [
+                        'propertyPath' => $key,
+                        'message' => reset($message),
+                    ];
+                    $detail .= sprintf("%s: %s\n", $key, reset($message));
+                }
+                break;
+            case $data instanceof ConstraintViolationListInterface:
+                $errors = $this->getConstraintViolationsAsArray($data);
+                foreach ($errors as $key => $message) {
+                    $violations[] = [
+                        'propertyPath' => $key,
+                        'message' => $message,
+                    ];
+                    $detail .= sprintf("%s: %s\n", $key, $message);
+                }
+                break;
+            default:
+                throw new Exception('Data should be instanceof FormInterface or ConstraintViolationListInterface');
+        }
+
+        return [
+            'title' => $title,
+            'detail' => $detail,
+            'violations' => $violations,
+        ];
+    }
+
     /**
      * Get form errors as array("field_name" => "error_message")
      */

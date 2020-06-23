@@ -38,18 +38,20 @@ class ForgotPassword implements PathInterface, ReplacePathInterface
         return new ArrayObject([
             'tags' => ['User'],
             'summary' => 'Recovery password request.',
-            'parameters' => [
-                [
-                    'name' => 'username',
-                    'in' => 'body',
-                    'schema' => [
-                        'type' => 'object',
-                        'description' => '',
-                        'properties' => [
-                            'username' => [
-                                'type' => 'string',
-                                'description' => 'username or email',
-                                'required' => true,
+            'requestBody' => [
+                'content' => [
+                    'application/json' => [
+                        'name' => 'username',
+                        'in' => 'body',
+                        'schema' => [
+                            'type' => 'object',
+                            'description' => '',
+                            'properties' => [
+                                'username' => [
+                                    'type' => 'string',
+                                    'description' => 'username or email',
+                                    'required' => true,
+                                ],
                             ],
                         ],
                     ],

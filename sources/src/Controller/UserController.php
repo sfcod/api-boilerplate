@@ -4,23 +4,36 @@ namespace App\Controller;
 
 use App\Controller\Common\TransformJsonBodyTrait;
 use App\Entity\User;
-use App\FormType\ProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController
  *
- * @author Virchenko Maksim <muslim1992@gmail.com>
+ * This is example how add action via controller.
+ *
+ * @deprecated pls use actions implementation
  *
  * @package App\Controller
  */
 class UserController extends AbstractController
 {
     use TransformJsonBodyTrait;
+
+    /**
+     * Entity:
+     *      ...
+     *         "get_profile"={
+     *             "method"="GET",
+     *             "route_name"="get_profile",
+     *             "normalization_context"={"groups"={"user:profile:read"}},
+     *             "openapi_context"={
+     *                 "summary"="Retreive the current User resource.",
+     *                 "parameters"={},
+     *             },
+     *         },
+     *      ...
+     */
 
     /**
      * @Route(
@@ -36,42 +49,14 @@ class UserController extends AbstractController
      *
      * @return object|User|null
      */
+
+    /**
+     * Here you can put route above.
+     *
+     * @return object|\Symfony\Component\Security\Core\User\UserInterface|null
+     */
     public function getProfileAction()
     {
         return $this->getUser();
-    }
-
-    /**
-     * @Route(
-     *     name="update_profile",
-     *     path="/api/profile",
-     *     methods={"PUT"},
-     *     defaults={
-     *         "_api_resource_class"=User::class,
-     *         "_api_collection_operation_name"="update_profile",
-     *     }
-     * )
-     *
-     * @return object|User|null
-     */
-    public function updateProfileAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $this->transformJsonBody($request);
-
-        $user = $this->getUser();
-        $form = $this->createForm(ProfileType::class, $user, [
-            'method' => 'PUT',
-            'allow_extra_fields' => true,
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $user = $form->getData();
-
-            return $user;
-        }
-
-        return $this->json(['message' => 'Bad request', Response::HTTP_BAD_REQUEST]);
     }
 }

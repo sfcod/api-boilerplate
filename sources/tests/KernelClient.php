@@ -33,7 +33,9 @@ trait KernelClient
     protected function getKernelClient()
     {
         if (null === $this->client) {
-            $this->client = static::createClient();
+            $this->client = static::createClient([
+                'environment' => 'test',
+            ]);
         }
 
         return clone $this->client;

@@ -2,7 +2,7 @@
 
 namespace App\Admin;
 
-use App\DBAL\Types\UserRoleType;
+use App\DBAL\Types\UserRole;
 use App\Entity\User;
 use App\Security\AdminUserVoter;
 use App\Service\UserManager;
@@ -76,7 +76,7 @@ class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('role', 'doctrine_orm_choice', [], ChoiceType::class, [
                 'required' => true,
-                'choices' => UserRoleType::getReadableValues(),
+                'choices' => UserRole::getReadableValues(),
             ])
 //            ->add('status', 'doctrine_orm_choice', [], ChoiceType::class, [
 //                'choices' => UserStatus::getChoices(),
@@ -102,7 +102,7 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName')
             ->add('email')
             ->add('role', ChoiceType::class, [
-                'choices' => UserRoleType::getReadableValues(),
+                'choices' => UserRole::getReadableValues(),
             ])
             ->add('createdAt')
             ->add('_action', null, [
@@ -126,7 +126,7 @@ class UserAdmin extends AbstractAdmin
             ->add('email')
             ->add('role', ChoiceType::class, [
                 'required' => true,
-                'choices' => UserRoleType::getReadableValues(),
+                'choices' => UserRole::getReadableValues(),
             ])
             ->add('createdAt');
     }
@@ -153,7 +153,7 @@ class UserAdmin extends AbstractAdmin
         if ($this->isGranted(AdminUserVoter::ADMIN_USERS_CHANGE_ROLE, $this->getSubject())) {
             $form->add('role', ChoiceType::class, [
                 'required' => true,
-                'choices' => array_flip(UserRoleType::getReadableValues()),
+                'choices' => array_flip(UserRole::getReadableValues()),
             ]);
         }
     }

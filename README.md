@@ -3,11 +3,10 @@
 ## Admin part
 - Sonata admin
 
-## Fronted part
+## Api part
 - Api platform 
 
 #### Run:
-Configure mailer
 ``` bash
 $ composer install
 $ npm install
@@ -24,7 +23,10 @@ $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 ```
 
 #### PHPUnit:
-
+```bash 
+php bin/console do:mi:mi --env=test
+php bin/console do:fi:lo --env=test
+```
 ``` bash
 $ php bin/phpunit
 $ php bin/phpunit --filter SecurityControllerTest

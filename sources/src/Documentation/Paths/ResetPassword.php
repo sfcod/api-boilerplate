@@ -37,18 +37,20 @@ class ResetPassword implements PathInterface, ReplacePathInterface
         return new ArrayObject([
             'tags' => ['User'],
             'summary' => 'Reset password.',
-            'parameters' => [
-                [
-                    'name' => 'password',
-                    'in' => 'body',
-                    'schema' => [
-                        'type' => 'object',
-                        'description' => '',
-                        'properties' => [
-                            'password' => [
-                                'type' => 'string',
-                                'description' => 'plain password',
-                                'required' => true,
+            'requestBody' => [
+                'content' => [
+                    'application/json' => [
+                        'name' => 'password',
+                        'in' => 'body',
+                        'schema' => [
+                            'type' => 'object',
+                            'description' => '',
+                            'properties' => [
+                                'password' => [
+                                    'type' => 'string',
+                                    'description' => 'plain password',
+                                    'required' => true,
+                                ],
                             ],
                         ],
                     ],

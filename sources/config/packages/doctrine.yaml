@@ -5,7 +5,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         schema_filter: ~^(?!v_)~
         types:
-            user_role: App\DBAL\Types\UserRoleType
+            user_role: App\DBAL\Types\UserRole
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

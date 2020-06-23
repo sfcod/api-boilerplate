@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Actions;
+namespace App\Tests\Actions\Band;
 
 use App\Entity\User;
 use App\Tests\WebTestCaseAbstract;
@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  *
  * @package App\Tests\Controller\Api
  */
-class BandActionTest extends WebTestCaseAbstract
+class BandItemActionTest extends WebTestCaseAbstract
 {
     /**
      * Test api login

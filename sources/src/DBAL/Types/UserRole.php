@@ -5,13 +5,13 @@ namespace App\DBAL\Types;
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
 /**
- * Class UserRoleType
+ * Class UserRole
  *
  * @author Virchenko Maksim <muslim1992@gmail.com>
  *
  * @package App\DBAL\Types
  */
-class UserRoleType extends AbstractEnumType
+class UserRole extends AbstractEnumType
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_USER = 'ROLE_USER';

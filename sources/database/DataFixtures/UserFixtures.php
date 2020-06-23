@@ -2,7 +2,7 @@
 
 namespace Database\DataFixtures;
 
-use App\DBAL\Types\UserRoleType;
+use App\DBAL\Types\UserRole;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -64,7 +64,7 @@ class UserFixtures extends Fixture
         $d = new DateTime();
         $user = new User();
         $user
-            ->setRoles([UserRoleType::ROLE_ADMIN])
+            ->setRoles([UserRole::ROLE_ADMIN])
             ->setFirstName($this->getFaker()->firstName)
             ->setLastName($this->getFaker()->lastName)
             ->setEmail(self::ADMIN_USER_EMAIL)
@@ -85,7 +85,7 @@ class UserFixtures extends Fixture
         $d = new DateTime();
         $user = new User();
         $user
-            ->setRoles([UserRoleType::ROLE_USER])
+            ->setRoles([UserRole::ROLE_USER])
             ->setFirstName($this->getFaker()->firstName)
             ->setLastName($this->getFaker()->lastName)
             ->setEmail(self::USER_EMAIL)

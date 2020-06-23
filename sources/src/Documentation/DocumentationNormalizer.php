@@ -116,6 +116,7 @@ final class DocumentationNormalizer implements NormalizerInterface
             }
             if (is_a($path, ReplacePathInterface::class)) {
                 foreach ($data['paths'][$path->getPath()] as $i => $parameter) {
+                    // @phpstan-ignore-next-line
                     $data['paths'][$path->getPath()] = $documentation['paths'][$path->getPath()];
                 }
             }
