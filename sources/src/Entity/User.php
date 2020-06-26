@@ -70,8 +70,8 @@ class User implements UserInterface
      * @Groups({"user:read", "user:profile:read"})
      *
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
