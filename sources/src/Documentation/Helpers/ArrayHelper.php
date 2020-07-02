@@ -29,7 +29,7 @@ class ArrayHelper
     {
         $args = func_get_args();
         $res = array_shift($args);
-        $o = 0;
+
         while (!empty($args)) {
             foreach (array_shift($args) as $k => $v) {
                 if ($v instanceof ReplaceArrayObject) {
