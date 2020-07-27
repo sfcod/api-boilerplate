@@ -77,7 +77,12 @@
     },
     "scripts": {
         "auto-scripts": {
+            "cache:pool:clear cache.global_clearer": "symfony-cmd",
+            "doctrine:cache:clear-metadata": "symfony-cmd",
+            "doctrine:cache:clear-query": "symfony-cmd",
+            "doctrine:cache:clear-result": "symfony-cmd",
             "cache:clear": "symfony-cmd",
+            "cache:warmup": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [

@@ -2,6 +2,7 @@
 
 namespace App\Documentation\Paths;
 
+use App\Documentation\Helpers\ReplaceArrayObject;
 use ArrayObject;
 
 /**
@@ -37,11 +38,9 @@ class ResetPassword implements PathInterface, ReplacePathInterface
         return new ArrayObject([
             'tags' => ['User'],
             'summary' => 'Reset password.',
-            'requestBody' => [
+            'requestBody' => new ReplaceArrayObject([
                 'content' => [
                     'application/json' => [
-                        'name' => 'password',
-                        'in' => 'body',
                         'schema' => [
                             'type' => 'object',
                             'description' => '',
@@ -55,12 +54,12 @@ class ResetPassword implements PathInterface, ReplacePathInterface
                         ],
                     ],
                 ],
-            ],
-            'responses' => [
+            ]),
+            'responses' => new ReplaceArrayObject([
                 204 => [
                     'description' => 'Password was updated successfully',
                 ],
-            ],
+            ]),
         ]);
     }
 }

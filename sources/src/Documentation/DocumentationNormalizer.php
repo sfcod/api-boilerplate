@@ -3,6 +3,7 @@
 namespace App\Documentation;
 
 use App\Documentation\Definitions\DefinitionObjectInterface;
+use App\Documentation\Helpers\ArrayHelper;
 use App\Documentation\Paths\PathInterface;
 use App\Documentation\Paths\ReplacePathInterface;
 use App\Documentation\Paths\UnsupportedParamsInterface;
@@ -90,7 +91,8 @@ final class DocumentationNormalizer implements NormalizerInterface
 
         $original = $this->decorated->normalize($object, $format, $context);
 
-        $data = array_merge_recursive($original, $documentation);
+        $data = ArrayHelper::merge($original, $documentation);
+
         foreach ($this->hiddenPaths as $path) {
             if (isset($data['paths'][$path])) {
                 unset($data['paths'][$path]);
