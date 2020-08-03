@@ -1,17 +1,15 @@
-image: edbizarro/gitlab-ci-pipeline-php:7.2
+image: edbizarro/gitlab-ci-pipeline-php:7.3
 
 services:
-  - mysql:5.6
+  - postgres:11
 
 variables:
-  MYSQL_DATABASE: vodafone_test
-  MYSQL_USER: vodafone
-  MYSQL_PASSWORD: vodafone123
-  MYSQL_ROOT_PASSWORD: secret
+  POSTGRES_DB: api_boilerplate_test
+  POSTGRES_USER: api_boilerplate
+  POSTGRES_PASSWORD: api_boilerplate123
 
 stages:
   - test
-#  - deploy
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -35,6 +33,6 @@ test:
     - php sources/bin/console doctrine:migrations:migrate --env="test"
     - php sources/bin/console doctrine:fixtures:load -n
     - php sources/vendor/bin/php-cs-fixer fix --dry-run --diff --config='sources/.php_cs'
-#    - php sources/vendor/bin/phpstan analyse --no-progress -l 6 -c sources/phpstan.neon sources/src
+    - php sources/vendor/bin/phpstan analyse --no-progress -l 4 -c sources/phpstan.neon sources/src
     - php sources/bin/phpunit --configuration sources/phpunit.xml.dist
     - echo "Test - finish"
