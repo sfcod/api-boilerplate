@@ -82,7 +82,7 @@ class TransformJsonBodySubscriber implements EventSubscriberInterface
 
         if (!$this->transformJsonBody($request)) {
             $response = Response::create('Unable to parse request.', 400);
-            $event->getController()->setResponse($response);
+            $controller->setResponse($response);
         }
     }
 

@@ -29,7 +29,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *
      * @param string $username The username
      *
-     * @return UserInterface|null
+     * @return User|null
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

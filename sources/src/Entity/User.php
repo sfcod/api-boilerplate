@@ -128,7 +128,7 @@ class User implements UserInterface
     private $recoveryPasswordToken;
 
     /**
-     * @var DateTime
+     * @var \DateTimeInterface
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=false, options={"default": "CURRENT_TIMESTAMP"})
@@ -136,7 +136,7 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @var DateTime
+     * @var \DateTimeInterface
      *
      * @Gedmo\Timestampable(on="update")
      * @Gedmo\Timestampable(on="create")
@@ -229,6 +229,8 @@ class User implements UserInterface
     public function getSalt()
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
+
+        return null;
     }
 
     /**

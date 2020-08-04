@@ -17,6 +17,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    use TransformJsonBodyTrait;
+
     /**
      * @Route("/admin/login", name="admin_login")
      */
@@ -41,8 +43,6 @@ class SecurityController extends AbstractController
     {
     }
 
-    use TransformJsonBodyTrait;
-
     /**
      * @Route(
      *     name="forgot_password",
@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
     {
         $this->transformJsonBody($request);
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->getDoctrine()
             ->getRepository(User::class)
             ->loadUserByUsername($request->request->get('username'));

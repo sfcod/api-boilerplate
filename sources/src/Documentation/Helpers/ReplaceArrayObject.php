@@ -13,5 +13,4 @@ use ArrayObject;
  */
 class ReplaceArrayObject extends ArrayObject
 {
-
 }

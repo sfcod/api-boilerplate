@@ -2,7 +2,6 @@
 
 namespace App\Documentation\Helpers;
 
-
 use ArrayObject;
 
 /**
@@ -20,8 +19,8 @@ class ArrayHelper
      * Additionally it supports values which are instances of ReplaceArrayObject. In this case it will not merge
      * arrays with the same key and just replace older one with newer one.
      *
-     * @param $a
-     * @param $b
+     * @param mixed $a
+     * @param mixed $b
      *
      * @return mixed
      */
@@ -56,9 +55,7 @@ class ArrayHelper
      *
      * It additionally checks if $data is an instance of ArrayObject.
      *
-     * @param $data
-     *
-     * @return bool
+     * @param mixed $data
      */
     public static function isArray($data): bool
     {

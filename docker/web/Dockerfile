@@ -72,7 +72,7 @@ RUN usermod -u ${HOST_UID} -d /var/www -s /bin/bash -p secret www-data \
 
 RUN sudo -u www-data composer config --global github-oauth.github.com "${OAUTH_KEY}"
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash \
     && apt-get install -y nodejs
 RUN npm i -g yarn
 
