@@ -35,16 +35,6 @@ class UserAdmin extends AbstractAdmin
     }
 
     /**
-     * Encode user's password on create
-     *
-     * @param User $user
-     */
-    public function prePersist($user)
-    {
-        $this->userManager->updatePassword($user);
-    }
-
-    /**
      * Send message to user that acount was created
      *
      * @param User $user
@@ -52,16 +42,6 @@ class UserAdmin extends AbstractAdmin
     public function postPersist($user)
     {
         $this->userManager->notificationNewUserWasCreated($user);
-    }
-
-    /**
-     * Encode user's password on update
-     *
-     * @param User $user
-     */
-    public function preUpdate($user)
-    {
-        $this->userManager->updatePassword($user);
     }
 
     /**
