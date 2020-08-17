@@ -2,8 +2,11 @@
 
 namespace App\Tests;
 
+use App\Kernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -18,7 +21,7 @@ abstract class WebTestCaseAbstract extends WebTestCase
     /**
      * @var string
      */
-    protected static $class = \App\Kernel::class;
+    protected static $class = Kernel::class;
 
     /**
      * @var EntityManagerInterface
@@ -26,7 +29,7 @@ abstract class WebTestCaseAbstract extends WebTestCase
     protected $em;
 
     /**
-     * @var \Faker\Generator
+     * @var Generator
      */
     protected $faker;
 
@@ -42,7 +45,7 @@ abstract class WebTestCaseAbstract extends WebTestCase
     {
         parent::setUp();
 
-        $this->faker = \Faker\Factory::create();
+        $this->faker = Factory::create();
 
         $this->em = $this->getKernelClient()
             ->getContainer()

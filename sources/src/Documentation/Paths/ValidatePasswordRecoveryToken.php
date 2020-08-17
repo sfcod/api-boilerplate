@@ -2,8 +2,8 @@
 
 namespace App\Documentation\Paths;
 
-use App\Documentation\Definitions\JwtToken;
-use App\Documentation\Definitions\Message;
+use App\Documentation\Components\Schemas\JwtToken;
+use App\Documentation\Components\Schemas\Message;
 use ArrayObject;
 
 /**

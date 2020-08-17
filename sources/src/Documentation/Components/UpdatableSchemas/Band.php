@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Documentation\Schemas;
+namespace App\Documentation\Components\UpdatableSchemas;
 
-class Band implements SchemasInterface
+use App\Documentation\Components\UpdatableSchemaInterface;
+
+class Band implements UpdatableSchemaInterface
 {
     public function getProperties(): array
     {

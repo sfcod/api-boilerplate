@@ -7,6 +7,7 @@ parameters:
 
 imports:
     - { resource: services/documentation.yaml }
+    - { resource: services/listeners.yaml }
 
 services:
     # default configuration for services in *this* file
@@ -22,7 +23,10 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Command,Entity,Migrations,Tests,Documentation,EntityListener,Kernel.php}'
+        exclude:
+            - '../src/{DependencyInjection,Command,Entity,Migrations,Tests,EntityListener}'
+            - '../src/{Kernel.php}'
+            - '../src/{Documentation,EventListener}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -61,19 +65,3 @@ services:
         arguments:
             - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
             - [ROLE_SUPER_ADMIN]
-
-    App\EventListener\FixPostgreSQLDefaultSchemaListener:
-        tags:
-            - { name: doctrine.event_listener, event: postGenerateSchema }
-
-    App\EventListener\UserRecoveryPasswordListener:
-        tags:
-            - { name: kernel.event_listener, event: App\Event\UserRecoveryPasswordEvent }
-
-    App\EventListener\HeaderPaginationListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: addPaginationHeaders }
-
-    App\EventListener\RefreshTokenListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: addRefreshTokenHeader }

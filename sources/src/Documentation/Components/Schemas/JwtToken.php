@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Documentation\Definitions;
+namespace App\Documentation\Components\Schemas;
 
-class JwtToken implements DefinitionObjectInterface
+use App\Documentation\Components\SchemaInterface;
+
+class JwtToken implements SchemaInterface
 {
     public function getName(): string
     {
         return 'Token';
     }
 
-    public function getParams(): array
+    public function getSchema(): array
     {
         return [
             'type' => 'object',
@@ -25,6 +27,6 @@ class JwtToken implements DefinitionObjectInterface
 
     public function getRef(): string
     {
-        return '#/definitions/Token';
+        return '#/components/schemas/Token';
     }
 }

@@ -2,9 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
+use App\Tests\Controller\Data\UserTrait;
 use App\Tests\WebTestCaseAbstract;
-use Database\DataFixtures\UserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,30 +14,28 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SecurityControllerTest extends WebTestCaseAbstract
 {
+    use UserTrait;
+
     /**
      * Test api login
      */
     public function testLogin()
     {
+        $user = $this->makeUser();
+
         $client = $this->getKernelClient();
-        $client->request(
-            'POST',
-            '/api/login-check',
-            [],
-            [],
-            [
-                'CONTENT_TYPE' => 'application/json',
-            ],
-            json_encode([
-                'username' => 'user@fixtures.com',
-                'password' => 'user@fixtures.com',
-            ])
-        );
+        $client->request('POST', '/api/login-check', [], [], [
+            'HTTP_ACCEPT' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
+        ], json_encode([
+            'username' => $user->getEmail(),
+            'password' => $user->getPlainPassword(),
+        ]));
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $response = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertTrue(isset($data['token']));
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
+        $this->assertTrue(isset($response['token']));
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -46,21 +43,22 @@ class SecurityControllerTest extends WebTestCaseAbstract
      */
     public function testForgotPassword()
     {
-        /** @var KernelBrowser $client */
-        $client = static::createClient();
+        $user = $this->makeUser();
+
+        $client = $this->getKernelClient();
         $client->request('POST', '/api/forgot-password', [], [], [
             'HTTP_ACCEPT' => 'application/json',
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
-            'username' => UserFixtures::USER_EMAIL,
+            'username' => $user->getEmail(),
         ]));
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $response = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         $this->assertEquals([
             'message' => 'A recovery code was sent to your email',
-        ], $data);
+        ], $response);
     }
 
     /**
@@ -70,11 +68,12 @@ class SecurityControllerTest extends WebTestCaseAbstract
      */
     public function testValidateToken()
     {
-        /** @var User $user */
-        $user = $this->em->getRepository(User::class)->findOneBy(['email' => UserFixtures::USER_EMAIL]);
+        $user = $this->makeUser([
+            'recoveryPasswordToken' => $this->faker->word,
+        ]);
 
         /** @var KernelBrowser $client */
-        $client = static::createClient();
+        $client = $this->getKernelClient();
         $client->request('POST', sprintf('/api/forgot-password/validate-token'), [], [], [
             'HTTP_ACCEPT' => 'application/json',
             'CONTENT_TYPE' => 'application/json',
@@ -82,10 +81,10 @@ class SecurityControllerTest extends WebTestCaseAbstract
             'token' => $user->getRecoveryPasswordToken(),
         ]));
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $response = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $this->assertTrue(isset($data['token']));
+        $this->assertTrue(isset($response['token']));
     }
 
     /**
@@ -95,10 +94,13 @@ class SecurityControllerTest extends WebTestCaseAbstract
      */
     public function testRecoveryPassword()
     {
-        $user = $this->em->getRepository(User::class)->findOneBy(['email' => UserFixtures::USER_EMAIL]);
+        $user = $this->makeUser([
+            'recoveryPasswordToken' => $this->faker->word,
+        ]);
+
         /** @var KernelBrowser $client */
         $client = $this->doRequest($user, 'POST', sprintf('/api/users/reset-password'), [
-            'password' => UserFixtures::USER_EMAIL,
+            'password' => $user->getEmail(),
         ]);
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());

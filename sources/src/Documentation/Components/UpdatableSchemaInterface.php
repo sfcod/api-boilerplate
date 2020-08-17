@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Documentation\Schemas;
+namespace App\Documentation\Components;
 
 /**
  * Interface SchemasInterface
  *
  * @package App\Documentation\schemas
  */
-interface SchemasInterface
+interface UpdatableSchemaInterface
 {
     public function getProperties(): array;
 

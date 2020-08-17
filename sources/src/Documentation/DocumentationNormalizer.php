@@ -2,12 +2,12 @@
 
 namespace App\Documentation;
 
-use App\Documentation\Definitions\DefinitionObjectInterface;
+use App\Documentation\Components\SchemaInterface;
+use App\Documentation\Components\UpdatableSchemaInterface;
 use App\Documentation\Helpers\ArrayHelper;
 use App\Documentation\Paths\PathInterface;
 use App\Documentation\Paths\ReplacePathInterface;
 use App\Documentation\Paths\UnsupportedParamsInterface;
-use App\Documentation\Schemas\SchemasInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -33,14 +33,14 @@ final class DocumentationNormalizer implements NormalizerInterface
     private $hiddenPaths = [];
 
     /**
-     * @var SchemasInterface[]
+     * @var UpdatableSchemaInterface[]
      */
-    private $schemas = [];
+    private $updatableSchemas = [];
 
     /**
-     * @var DefinitionObjectInterface[]
+     * @var SchemaInterface[]
      */
-    private $definitions = [];
+    private $schemas = [];
 
     public function __construct(NormalizerInterface $decorated)
     {
@@ -56,19 +56,19 @@ final class DocumentationNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param DefinitionObjectInterface[] $definitions
-     */
-    public function setDefinitions($definitions)
-    {
-        $this->definitions = $definitions;
-    }
-
-    /**
-     * @param SchemasInterface[] $schemas
+     * @param SchemaInterface[] $schemas
      */
     public function setSchemas($schemas)
     {
         $this->schemas = $schemas;
+    }
+
+    /**
+     * @param UpdatableSchemaInterface[] $updatableSchemas
+     */
+    public function setUpdatableSchemas($updatableSchemas)
+    {
+        $this->updatableSchemas = $updatableSchemas;
     }
 
     /**
@@ -85,8 +85,8 @@ final class DocumentationNormalizer implements NormalizerInterface
             $documentation['paths'][$path->getPath()][$path->getMethod()] = $path->getParams();
         }
 
-        foreach ($this->definitions as $definition) {
-            $documentation['definitions'][$definition->getName()] = $definition->getParams();
+        foreach ($this->schemas as $schema) {
+            $documentation['components']['schemas'][$schema->getName()] = $schema->getSchema();
         }
 
         $original = $this->decorated->normalize($object, $format, $context);
@@ -98,7 +98,7 @@ final class DocumentationNormalizer implements NormalizerInterface
                 unset($data['paths'][$path]);
             }
         }
-        foreach ($this->schemas as $schema) {
+        foreach ($this->updatableSchemas as $schema) {
             foreach ($schema->getSchemas() as $schemaName) {
                 if (isset($data['components']['schemas'][$schemaName])) {
                     foreach ($schema->getProperties() as $i => $property) {

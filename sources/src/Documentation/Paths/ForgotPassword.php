@@ -2,7 +2,7 @@
 
 namespace App\Documentation\Paths;
 
-use App\Documentation\Definitions\Message;
+use App\Documentation\Components\Schemas\Message;
 use ArrayObject;
 
 /**

@@ -21,35 +21,22 @@ class HashPasswordListener
 
     /**
      * HashPasswordListener constructor.
-     *
-     * @param UserPasswordEncoder $passwordEncoder
      */
     public function __construct(UserPasswordEncoder $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    /**
-     * @param User $user
-     * @param LifecycleEventArgs $args
-     */
     public function prePersist(User $user, LifecycleEventArgs $args)
     {
         $this->encodePassword($user);
     }
 
-    /**
-     * @param User $user
-     * @param PreUpdateEventArgs $args
-     */
     public function preUpdate(User $user, PreUpdateEventArgs $args)
     {
         $this->encodePassword($user);
     }
 
-    /**
-     * @param User $entity
-     */
     private function encodePassword(User $entity)
     {
         if (!$entity->getPlainPassword()) {

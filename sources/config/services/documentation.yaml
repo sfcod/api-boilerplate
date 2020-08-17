@@ -10,24 +10,24 @@ services:
         tags:
             - { name: documentation.paths }
 
-    App\Documentation\Definitions\:
+    App\Documentation\Components\Schemas\:
         public: true
-        resource: '../../src/Documentation/Definitions'
-        tags:
-            - { name: documentation.definitions }
-
-    App\Documentation\Schemas\:
-        public: true
-        resource: '../../src/Documentation/Schemas'
+        resource: '../../src/Documentation/Components/Schemas'
         tags:
             - { name: documentation.schemas }
+
+    App\Documentation\Components\UpdatableSchemas\:
+        public: true
+        resource: '../../src/Documentation/Components/UpdatableSchemas'
+        tags:
+            - { name: documentation.updatable_schemas }
 
     App\Documentation\DocumentationNormalizer:
         decorates: api_platform.swagger.normalizer.api_gateway
         arguments: ['@App\Documentation\DocumentationNormalizer.inner']
         calls:
             - [setPaths, [!tagged documentation.paths]]
+            - [setUpdatableSchemas, [!tagged documentation.updatable_schemas]]
             - [setSchemas, [!tagged documentation.schemas]]
-            - [setDefinitions, [!tagged documentation.definitions]]
             - [setHiddenPaths, [[]]]
 #            - [setHiddenPaths, [['Some route', 'Another route']]]

@@ -331,7 +331,7 @@ class User implements UserInterface
     public function setPlainPassword(string $plainPassword): User
     {
         $this->plainPassword = $plainPassword;
-        
+
         // Trigger change set update
         $this->setUpdatedAt(new \DateTime());
 

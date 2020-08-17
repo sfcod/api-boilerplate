@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Documentation\Definitions;
+namespace App\Documentation\Components\Schemas;
 
-class UserCredentials implements DefinitionObjectInterface
+use App\Documentation\Components\SchemaInterface;
+
+class UserCredentials implements SchemaInterface
 {
-    public function getName(): string
-    {
-        return 'User:credentials';
-    }
-
-    public function getParams(): array
+    public function getSchema(): array
     {
         return [
             'type' => 'object',
@@ -31,6 +28,11 @@ class UserCredentials implements DefinitionObjectInterface
 
     public function getRef(): string
     {
-        return '#/definitions/' . $this->getName();
+        return '#/components/schemas/' . $this->getName();
+    }
+
+    public function getName(): string
+    {
+        return 'User:credentials';
     }
 }

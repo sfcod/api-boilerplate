@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Documentation\Definitions;
+namespace App\Documentation\Components\Schemas;
+
+use App\Documentation\Components\SchemaInterface;
 
 /**
  * Class Message
@@ -9,14 +11,14 @@ namespace App\Documentation\Definitions;
  *
  * @package App\Documentation\Definitions
  */
-class Message implements DefinitionObjectInterface
+class Message implements SchemaInterface
 {
     public function getName(): string
     {
         return 'Message';
     }
 
-    public function getParams(): array
+    public function getSchema(): array
     {
         return [
             'type' => 'object',
@@ -32,6 +34,6 @@ class Message implements DefinitionObjectInterface
 
     public function getRef(): string
     {
-        return '#/definitions/Message';
+        return '#/components/schemas/Message';
     }
 }

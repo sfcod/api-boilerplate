@@ -40,7 +40,7 @@ class UserManager
         $message = (new TemplatedEmail())
             ->from(getenv('MAILER_FROM'))
             ->to($user->getEmail())
-            ->htmlTemplate('email/create_user.html.twig')
+            ->htmlTemplate('emails/create_user.html.twig')
             ->context([
                 'fullName' => $user->getFullName(),
                 'email' => $user->getEmail(),

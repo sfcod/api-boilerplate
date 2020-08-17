@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Documentation\Definitions;
+namespace App\Documentation\Components;
 
 /**
  * Interface DefinitionInterface
  *
  * @package App\Documentation\definitions
  */
-interface DefinitionObjectInterface
+interface SchemaInterface
 {
     public function getName(): string;
 
-    public function getParams(): array;
+    public function getSchema(): array;
 
     public function getRef(): string;
 }

@@ -1,0 +1,26 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\EventListener\:
+      resource: '../../src/EventListener/*'
+
+    App\EventListener\FixPostgreSQLDefaultSchemaListener:
+      tags:
+        - { name: doctrine.event_listener, event: postGenerateSchema }
+
+    App\EventListener\AuthenticationSuccessListener:
+      tags:
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success }
+
+    App\EventListener\HeaderPaginationListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.response, method: addPaginationHeaders }
+
+    App\EventListener\RefreshTokenListener:
+      tags:
+        - { name: kernel.event_listener, event: kernel.response, method: addRefreshTokenHeader }
