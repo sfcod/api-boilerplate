@@ -45,8 +45,7 @@ class UserExtension implements QueryCollectionExtensionInterface, QueryItemExten
     private function supports($resourceClass): bool
     {
         return User::class === $resourceClass &&
-            false !== strpos($this->request->getPathInfo(), '/api') &&
-            false === strpos($this->request->getPathInfo(), '/api/users');
+            false !== strpos($this->request->getPathInfo(), '/api/users');
     }
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass)
