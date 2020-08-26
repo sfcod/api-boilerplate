@@ -8,19 +8,21 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\EventListener\:
       resource: '../../src/EventListener/*'
+      tags:
+        - { name: kernel.event_listener }
 
     App\EventListener\FixPostgreSQLDefaultSchemaListener:
       tags:
         - { name: doctrine.event_listener, event: postGenerateSchema }
 
-    App\EventListener\AuthenticationSuccessListener:
-      tags:
-        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success }
+#    App\EventListener\AuthenticationSuccessListener:
+#      tags:
+#        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success }
 
-    App\EventListener\HeaderPaginationListener:
-      tags:
-        - { name: kernel.event_listener, event: kernel.response, method: addPaginationHeaders }
-
-    App\EventListener\RefreshTokenListener:
-      tags:
-        - { name: kernel.event_listener, event: kernel.response, method: addRefreshTokenHeader }
+#    App\EventListener\HeaderPaginationListener:
+#      tags:
+#        - { name: kernel.event_listener, event: kernel.response}
+#
+#    App\EventListener\RefreshTokenListener:
+#      tags:
+#        - { name: kernel.event_listener, event: kernel.response }

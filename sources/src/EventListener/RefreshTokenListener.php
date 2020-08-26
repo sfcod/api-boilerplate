@@ -2,7 +2,6 @@
 
 namespace App\EventListener;
 
-use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -42,20 +41,20 @@ final class RefreshTokenListener
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function addRefreshTokenHeader(ResponseEvent $event)
+    public function __invoke(ResponseEvent $event)
     {
-        $request = $event->getRequest();
-        $response = $event->getResponse();
-        $statusCode = $response->getStatusCode();
-        $token = $this->tokenStorage->getToken(); //$request->attributes->get('data');
-        $route = $request->attributes->get('_route');
-
-        if ($token && ($user = $token->getUser()) && $user instanceof User &&
-            $statusCode >= 200 && $statusCode <= 300
-        ) {
-            $response->headers->add([
-                'X-Refresh-Token' => $this->tokenManager->create($user),
-            ]);
-        }
+//        $request = $event->getRequest();
+//        $response = $event->getResponse();
+//        $statusCode = $response->getStatusCode();
+//        $token = $this->tokenStorage->getToken(); //$request->attributes->get('data');
+//        $route = $request->attributes->get('_route');
+//
+//        if ($token && ($user = $token->getUser()) && $user instanceof User &&
+//            $statusCode >= 200 && $statusCode <= 300
+//        ) {
+//            $response->headers->add([
+//                'X-Refresh-Token' => $this->tokenManager->create($user),
+//            ]);
+//        }
     }
 }

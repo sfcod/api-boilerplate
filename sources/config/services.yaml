@@ -5,10 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
-imports:
-    - { resource: services/documentation.yaml }
-    - { resource: services/listeners.yaml }
-
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -26,7 +22,7 @@ services:
         exclude:
             - '../src/{DependencyInjection,Command,Entity,Migrations,Tests,EntityListener}'
             - '../src/{Kernel.php}'
-            - '../src/{Documentation,EventListener}'
+            - '../src/{Documentation}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

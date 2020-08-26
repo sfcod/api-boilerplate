@@ -17,7 +17,7 @@ final class HeaderPaginationListener
     /**
      * Add pagination info to headers
      */
-    public function addPaginationHeaders(ResponseEvent $event)
+    public function __invoke(ResponseEvent $event)
     {
         $request = $event->getRequest();
         $data = $request->attributes->get('data');
