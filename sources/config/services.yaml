@@ -61,3 +61,14 @@ services:
         arguments:
             - '@Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface'
             - [ROLE_SUPER_ADMIN]
+
+    App\Serializer\ItemNormalizer\:
+        resource: '../src/Serializer/ItemNormalizer'
+        tags: [ 'item.normalizer' ]
+
+    App\Serializer\ItemNormalizer:
+        class: App\Serializer\ItemNormalizer
+        decorates: 'api_platform.serializer.normalizer.item'
+        arguments: [ '@App\Serializer\ItemNormalizer.inner' ]
+        calls:
+            - [ setNormalizers, [ !tagged item.normalizer ] ]

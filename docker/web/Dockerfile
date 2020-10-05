@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:7.4-apache
 
 ARG HOST_UID
 ARG OAUTH_KEY
@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y apt-utils \
         vim \
         zip \
         wget \
+        libonig-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
@@ -33,13 +34,20 @@ RUN apt-get update && apt-get install -y apt-utils \
         libxml2-dev \
         php-soap \
     && docker-php-ext-install -j$(nproc) iconv \
-    && docker-php-ext-configure mbstring \
-    && docker-php-ext-install -j$(nproc) mbstring \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install intl zip opcache pcntl \
     && docker-php-ext-configure calendar --enable-calendar \
     && docker-php-ext-install -j$(nproc) calendar
+
+#php-redis
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
+
+# inky-extra
+RUN apt install -y libxslt-dev \
+    && docker-php-ext-install xsl
 
 # Install mysql pdo
 # RUN apt-get install -y default-mysql-client
