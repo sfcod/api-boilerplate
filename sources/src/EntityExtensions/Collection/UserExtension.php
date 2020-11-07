@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EntityExtensions;
+namespace App\EntityExtensions\Collection;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Security;
 
-class UserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+class UserExtension implements QueryCollectionExtensionInterface
 {
     private $security;
     private $authorizationChecker;
@@ -51,17 +51,5 @@ class UserExtension implements QueryCollectionExtensionInterface, QueryItemExten
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass)
     {
         // Here can be added some condition
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function applyToItem(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, array $identifiers, string $operationName = null, array $context = [])
-    {
-        if (false === $this->supports($resourceClass)) {
-            return;
-        }
-
-        $this->addWhere($queryBuilder, $resourceClass);
     }
 }

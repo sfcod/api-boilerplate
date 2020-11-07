@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Annotation\AgrNormalizer;
 use App\Controller\Actions\User\UpdateProfile;
 use App\Controller\Actions\User\UserItem;
 use App\DBAL\Types\UserRole;
+use App\Serializer\ItemNormalizer\UserItemNormalizer;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -25,9 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "get_profile"={
  *             "method"="GET",
  *             "read"=false,
+ *             "access_control"="is_granted('ROLE_USER')",
  *             "path"="/users/profile",
  *             "controller"=UserItem::class,
- *             "normalization_context"={"groups"={"user:read"}},
+ *             "normalization_context"={"groups"={"user:read", "user:statistic"}},
  *             "openapi_context"={
  *                 "summary"="Retreive the current User resource.",
  *                 "parameters"={},
@@ -36,6 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "update_profile"={
  *             "method"="PUT",
  *             "read"=false,
+ *             "access_control"="is_granted('ROLE_USER')",
  *             "path"="/users/profile",
  *             "controller"=UpdateProfile::class,
  *             "normalization_context"={"groups"={"user:read"}},
@@ -51,6 +55,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         },
  *     }
  * )
+ *
+ * @AgrNormalizer(UserItemNormalizer::class, groups={"user:statistic"})
+ *
  * @ORM\EntityListeners({"App\EntityListener\HashPasswordListener"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="t_user")

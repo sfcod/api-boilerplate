@@ -69,6 +69,4 @@ services:
     App\Serializer\ItemNormalizer:
         class: App\Serializer\ItemNormalizer
         decorates: 'api_platform.serializer.normalizer.item'
-        arguments: [ '@App\Serializer\ItemNormalizer.inner' ]
-        calls:
-            - [ setNormalizers, [ !tagged item.normalizer ] ]
+        arguments: [ '@App\Serializer\ItemNormalizer.inner', !tagged_iterator item.normalizer ]

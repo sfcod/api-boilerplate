@@ -14,12 +14,7 @@ interface ItemNormalizerInterface
     /**
      * Normalize data
      *
-     * @param object $entity
+     * @param mixed $entity
      */
-    public function normalize($entity, array &$data);
-
-    /**
-     * @param object $object
-     */
-    public function supports($object): bool;
+    public function normalize($entity, array &$data, array $context);
 }

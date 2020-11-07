@@ -92,12 +92,12 @@ final class DocumentationNormalizer implements NormalizerInterface
         $original = $this->decorated->normalize($object, $format, $context);
 
         $data = ArrayHelper::merge($original, $documentation);
-
         foreach ($this->hiddenPaths as $path) {
-            if (isset($data['paths'][$path])) {
-                unset($data['paths'][$path]);
-            }
+            $parameters = explode(' ', $path);
+            [$p, $m] = $parameters;
+            unset($data['paths'][$p][$m]);
         }
+
         foreach ($this->updatableSchemas as $schema) {
             foreach ($schema->getSchemas() as $schemaName) {
                 if (isset($data['components']['schemas'][$schemaName])) {

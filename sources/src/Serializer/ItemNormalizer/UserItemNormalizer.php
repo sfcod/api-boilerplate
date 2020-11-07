@@ -2,8 +2,6 @@
 
 namespace App\Serializer\ItemNormalizer;
 
-use App\Entity\User;
-
 /**
  * Class UserItemNormalizer
  *
@@ -14,19 +12,9 @@ class UserItemNormalizer implements ItemNormalizerInterface
     /**
      * Normalize data
      *
-     * @param User $entity
-     *
-     * @return void
+     * @param mixed $entity
      */
-    public function normalize($entity, array &$data)
+    public function normalize($entity, array &$data, array $context)
     {
-    }
-
-    /**
-     * @param object $object
-     */
-    public function supports($object): bool
-    {
-        return $object instanceof User;
     }
 }

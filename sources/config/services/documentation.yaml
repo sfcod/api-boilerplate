@@ -30,4 +30,4 @@ services:
             - [setUpdatableSchemas, [!tagged documentation.updatable_schemas]]
             - [setSchemas, [!tagged documentation.schemas]]
             - [setHiddenPaths, [[]]]
-#            - [setHiddenPaths, [['Some route', 'Another route']]]
+#            - [setHiddenPaths, [['route-path-1 get', 'route-path-2 post']]]

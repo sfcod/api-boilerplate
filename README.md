@@ -31,3 +31,13 @@ php bin/console do:fi:lo --env=test
 $ php bin/phpunit
 $ php bin/phpunit --filter SecurityControllerTest
 ```
+
+#### Custom annotation:
+- Add a custom field to normalize entity
+```bash
+@AgrNormalizer(UserItemNormalizer::class, groups={"user:statistic"})
+```
+- Add a query param require validation
+```bash
+@ApiRequiredFilters("get", filters={"referred"})
+```

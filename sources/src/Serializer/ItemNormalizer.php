@@ -2,7 +2,9 @@
 
 namespace App\Serializer;
 
-use App\Serializer\ItemNormalizer\ItemNormalizerInterface;
+use App\Annotation\AgrNormalizer;
+use Doctrine\Common\Annotations\AnnotationReader;
+use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -31,12 +33,13 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
     /**
      * ItemNormalizer constructor.
      */
-    public function __construct(NormalizerInterface $decorated)
+    public function __construct(NormalizerInterface $decorated, iterable $normalizers)
     {
         if (!$decorated instanceof DenormalizerInterface) {
             throw new \InvalidArgumentException(sprintf('The decorated normalizer must implement the %s.', DenormalizerInterface::class));
         }
 
+        $this->normalizers = $normalizers;
         $this->decorated = $decorated;
     }
 
@@ -59,15 +62,35 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
      *
      * @throws ReflectionException
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     * @throws \Exception
      */
     public function normalize($object, $format = null, array $context = [])
     {
         $data = $this->decorated->normalize($object, $format, $context);
 
-        /** @var ItemNormalizerInterface $normalizer */
-        foreach ($this->normalizers as $normalizer) {
-            if ($normalizer->supports($object)) {
-                $normalizer->normalize($object, $data);
+        $annotationReader = new AnnotationReader();
+        $reflectionClass = new ReflectionClass(get_class($object));
+
+        // Some SF bug, if move this into __construct then nested loop
+        if (false === is_array($this->normalizers)) {
+            $normalizers = [];
+            foreach ($this->normalizers as $normalizer) {
+                $normalizers[trim(get_class($normalizer))] = $normalizer;
+            }
+            $this->normalizers = $normalizers;
+        }
+
+        $classAnnotations = $annotationReader->getClassAnnotations($reflectionClass);
+        foreach ($classAnnotations as $classAnnotation) {
+            if ($classAnnotation instanceof AgrNormalizer) {
+                if (false === empty(array_intersect($classAnnotation->groups, (array)$context['groups']))) {
+                    $normalizerClass = trim($classAnnotation->normalizer, '/');
+                    if (false === isset($this->normalizers[$normalizerClass])) {
+                        throw new \Exception(sprintf('Can not find normalizer %s', $normalizerClass));
+                    }
+
+                    $this->normalizers[$normalizerClass]->normalize($object, $data, $context);
+                }
             }
         }
 
@@ -105,13 +128,5 @@ final class ItemNormalizer implements NormalizerInterface, DenormalizerInterface
         if ($this->decorated instanceof SerializerAwareInterface) {
             $this->decorated->setSerializer($serializer);
         }
-    }
-
-    /**
-     * Sets normalizers
-     */
-    public function setNormalizers(iterable $normalizers)
-    {
-        $this->normalizers = $normalizers;
     }
 }
