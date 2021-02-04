@@ -22,6 +22,8 @@ sonata_admin:
         user_block: 'backend/layout/partials/user_block.html.twig'
     options:
         title_mode: 'both'
+        legacy_twig_text_extension: false
+
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

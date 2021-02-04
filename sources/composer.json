@@ -2,29 +2,28 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.0",
+        "php": "^7.4.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.2",
         "doctrine/doctrine-bundle": "^2.0",
-        "fresh/doctrine-enum-bundle": "~6.0",
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "fzaninotto/faker": "^1.9",
+        "fakerphp/faker": "^1.13",
+        "fresh/doctrine-enum-bundle": "^6.0",
+        "friendsofphp/php-cs-fixer": "^2.18",
         "gedmo/doctrine-extensions": "^2.4",
         "lexik/jwt-authentication-bundle": "^2.6",
         "nesbot/carbon": "^2.27",
         "predis/predis": "^1.1",
-        "sensio/framework-extra-bundle": "^5.1",
-        "sonata-project/admin-bundle": "^3.73",
-        "sonata-project/core-bundle": "^3.20",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.21",
-        "stof/doctrine-extensions-bundle": "^1.3",
-        "symfony/apache-pack": "^1.0",
+        "sensio/framework-extra-bundle": "*",
+        "sonata-project/admin-bundle": "^3.88",
+        "sonata-project/doctrine-orm-admin-bundle": "^3.28",
+        "stof/doctrine-extensions-bundle": "^v1.5",
+        "symfony/apache-pack": "*",
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
-        "symfony/flex": "^1.3.1",
+        "symfony/flex": "^v1.12.1",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
         "symfony/google-mailer": "*",
@@ -44,17 +43,18 @@
         "symfony/yaml": "*"
     },
     "require-dev": {
-        "dms/phpunit-arraysubset-asserts": "^0.1.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
-        "phpstan/phpstan": "^0.12.34",
-        "phpstan/phpstan-doctrine": "^0.12.19",
-        "phpstan/phpstan-symfony": "^0.12.7",
+        "dms/phpunit-arraysubset-asserts": "^v0.2.1",
+        "doctrine/doctrine-fixtures-bundle": "^3.4.0",
+        "phpstan/phpstan": "^0.12.71",
+        "phpstan/phpstan-doctrine": "^0.12.30",
+        "phpstan/phpstan-symfony": "^0.12.16",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.14",
+        "symfony/maker-bundle": "*",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "^1.0"
     },
     "config": {
+        "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
         },
@@ -72,12 +72,9 @@
         }
     },
     "replace": {
-        "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-php72": "*"
     },
     "scripts": {
         "auto-scripts": {

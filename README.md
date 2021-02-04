@@ -14,6 +14,12 @@ $ npm run dev
 $ php init.php
 ```
 
+
+#### Docker
+```bash
+docker exec -it api-bollerplate_web su www-data
+```
+
 #### Generate the SSH keys:
 
 ``` bash
