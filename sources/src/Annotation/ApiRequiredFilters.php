@@ -7,7 +7,7 @@ namespace App\Annotation;
  *
  * @Annotation
  * @Target({"CLASS"})
- *
+ * @ApiRequiredFilters("get", filters={"type", "status"})
  * @author Virchenko Maksim <muslim1992@gmail.com>
  *
  * @package App\Annotation

@@ -4,7 +4,7 @@ services:
   - postgres:11
 
 variables:
-  POSTGRES_DB: api_boilerplate_test
+  POSTGRES_DB: test
   POSTGRES_USER: api_boilerplate
   POSTGRES_PASSWORD: api_boilerplate123
 

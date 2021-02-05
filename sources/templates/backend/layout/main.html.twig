@@ -17,11 +17,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('backend/app') }}
+    {{ encore_entry_link_tags('backend/styles') }}
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('backend/app') }}
+    {{ encore_entry_script_tags('backend/global') }}
 {% endblock javascripts %}

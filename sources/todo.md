@@ -1,0 +1,4 @@
+- Implement Input/Output DTO
+- Delete serializer
+- Think about Documentation
+- 
