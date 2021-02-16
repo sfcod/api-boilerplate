@@ -17,8 +17,8 @@ services:
         depends_on:
             - pgsql
             - redis
-        environment:
-            XDEBUG_CONFIG: remote_host=${XDEBUG_IDE_IP}
+#        environment:
+#            XDEBUG_CONFIG: remote_host=${XDEBUG_IDE_IP}
     pgsql:
         container_name: "${COMPOSE_PROJECT_NAME:-api-boilerplate}_postgres"
         hostname: "postgres"

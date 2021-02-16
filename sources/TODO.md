@@ -1,0 +1,4 @@
+- Implement Input/Output DTO
+- Serializer, maybe remove from the box
+- Documentation refactoring
+- Add xdebug v2
