@@ -105,7 +105,7 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string")
      * @ApiProperty(
      *     attributes={
      *         "swagger_context"={
@@ -117,7 +117,7 @@ class User implements UserInterface
      *     }
      * )
      */
-    private $roles = [];
+    private $roles = '';
 
     /**
      * @var string The hashed password
@@ -189,13 +189,13 @@ class User implements UserInterface
 
     public function getRoles(): ?array
     {
-        $roles = $this->roles;
+        $roles = json_decode($this->roles, JSON_OBJECT_AS_ARRAY);
 
         if (!in_array(UserRole::ROLE_USER, $roles)) {
             $roles[] = UserRole::ROLE_USER;
         }
 
-        return $this->roles;
+        return $roles;
     }
 
     /**
@@ -203,7 +203,7 @@ class User implements UserInterface
      */
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+        $this->roles = json_encode($roles, JSON_OBJECT_AS_ARRAY);
 
         return $this;
     }

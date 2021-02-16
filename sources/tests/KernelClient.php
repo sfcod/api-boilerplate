@@ -3,7 +3,6 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use Common\Entity\Client;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
