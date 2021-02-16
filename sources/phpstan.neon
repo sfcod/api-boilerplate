@@ -6,4 +6,4 @@ parameters:
 		- %rootDir%/../../../database/Migrations/*
 		- %rootDir%/../../../tests/*/data/*
 	doctrine:
-		objectManagerLoader: tests/object-manager.php
+		objectManagerLoader: config/object-manager.php
