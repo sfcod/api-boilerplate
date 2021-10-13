@@ -45,9 +45,7 @@ RUN apt install -y libxslt-dev \
     && docker-php-ext-install xsl
 
 # Install pgsql pdo
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
-    && apt-get update && apt-get install -y postgresql-client
+RUN apt update && apt-get install -y postgresql-client
 RUN docker-php-ext-install pdo pdo_pgsql
 
 RUN a2enmod rewrite && a2enmod headers
